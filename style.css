@@ -1,0 +1,9 @@
+label{
+    border: 3px solid red;
+}
+#group{
+    width: 600px;
+    border: 1px solid black;
+    margin-left: 20px;
+    padding: 10px;
+}
