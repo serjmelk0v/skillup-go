@@ -1,71 +1,62 @@
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', true);
-    $result = null;
-    $operand1 = null;
-    $operand2 = null;
-    $operator = '+';
-
-    if(isset($_REQUEST['operator'])){
-        $operand1 = $_REQUEST['operand1'];
-        $operator = $_REQUEST['operator'];
-        $operand2 = $_REQUEST['operand2'];
-
-        switch ($operator) {
-            case '+': $result = $operand1 + $operand2; break;
-            case '-': $result = $operand1 - $operand2; break;
-            case '*': $result = $operand1 * $operand2; break;
-            case '/':
-                if ($operand2 == 0){
-                    $result = 'Делить на 0 нельзя';
-                } else {
-                    $result = $operand1 / $operand2;
-                }
-
-                break;
-
-
-        }
-
-    }
-
-
-    function printOptions($options, $value) {
-       foreach ($options as $option) {
-           if ($option == $value){
-               $selected = 'selected';
-           } else {
-               $selected = '';
-           }
-
-           echo '<option' . $selected . '>' . $option . '</option>';
-       }
-
-    }
-
-
-
-
+include __DIR__. '/actions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Калькулятор</title>
+    <title>Форма регистрации</title>
+    <style>
+        label{
+            display: block;
+            position: relative;
+            line-height: 1.5em;
+            margin-bottom: 0.7em;
+        }
+
+        label input {
+            display: block;
+            position: absolute;
+            left: 100px;
+            top: 0;
+            border: 1px solid gray;
+        }
+        label p.error {
+            margin: -0.2em 0 0.7em 100px;
+            color: red;
+        }
+
+    </style>
+
 </head>
 <body>
 
-<form>
-    <input type="number" name="operand1" value="<?php echo $operand1 ?>">
-    <select name="operator">
-        <?php printOptions(['+','-','*','/'], $operator)?>
-    </select>
-    <input type="number" name="operand2" value="<?= $operand2?>">
-    <button type="submit">=</button>
-    <b><?php echo $result?></b>
+    <h1>Регистрация</h1>
+    <form method="post">
+        <label>
+            Имя:
+            <input name="first_name" value="<?=getValue ('first_name')?>">
+        <?= getError('first_name')?>
+        <label>
+            Фамилия:
+            <input name="last_name" value="<?=getValue ('last_name')?>">
+            <?= getError('last_name')?>
+        </label>
 
+        <label>
+            Email:
+            <input tape="email" name="email" value="<?=getValue ('email')?>">
+            <?= getError('email')?>
+        </label>
 
-</form>
+        <label>
+            Пароль:
+            <input tape="password" name="password" value="<?=getValue ('password')?>">
+            <?= getError('password')?>
+        </label>
 
+        <button type="submit">Зарегестрироваться</button>
+
+    </form>
 </body>
 </html>
